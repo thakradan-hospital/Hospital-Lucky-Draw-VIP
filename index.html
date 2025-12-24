@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>จับฉลากของขวัญปีใหม่</title>
+    <title>จับฉลากของขวัญปีใหม่ กล่องจุ่ม</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -12,6 +12,8 @@
     />
     <script src="/_sdk/element_sdk.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+    <audio id="soundBox" src="dice.mp3" preload="auto"></audio>
+    <audio id="soundWin" src="airhorn.mp3" preload="auto"></audio>
     <script type="module">
       import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
       import {
@@ -469,6 +471,8 @@
         `;
 
           document.body.appendChild(popup);
+          // 🔊 เล่นเสียงเปิดกล่อง
+          playSound("soundBox");
 
           // แสดงกล่องของขวัญ 3 วินาที
           setTimeout(() => {
@@ -619,6 +623,8 @@
       `;
 
         document.body.appendChild(popup);
+        // 🔊 เสียงชนะรางวัล
+        playSound("soundWin");
 
         document.getElementById("closePopup").addEventListener("click", () => {
           popup.remove();
@@ -990,6 +996,16 @@
         // โหลดข้อมูลจาก Firebase
         loadFirebaseData();
       }
+
+      function playSound(id) {
+  const audio = document.getElementById(id);
+  if (!audio) return;
+
+  audio.currentTime = 0; // เล่นซ้ำได้ทันที
+  audio.play().catch(() => {
+    // ป้องกัน error บาง browser
+  });
+}
 
       init();
     </script>
