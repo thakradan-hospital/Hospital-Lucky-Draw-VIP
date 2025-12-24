@@ -110,10 +110,16 @@
       }
 
       .gradient-bg {
-        background: linear-gradient(-45deg, #e0f2fe, #dbeafe, #e0e7ff, #ede9fe);
-        background-size: 400% 400%;
-        animation: gradient 15s ease infinite;
-      }
+      background: linear-gradient(
+    135deg,
+    #667eea 0%,
+    #764ba2 50%,
+    #f093fb 100%
+  );
+      background-size: 200% 200%;
+      animation: gradient 15s ease infinite;
+}
+
 
       @keyframes float {
         0%,
@@ -160,10 +166,40 @@
       }
 
       .glass-morphism {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.5);
-      }
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(12px);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+  .app-title-white {
+  color: #ffffff !important;
+  text-align: center;
+  letter-spacing: 0.5px;
+
+  text-shadow:
+    0 6px 24px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+
+.app-title-white {
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.35),
+    0 6px 24px rgba(0, 0, 0, 0.45);
+}
+
+.app-subtitle {
+  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.3px;
+
+  text-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.35);
+}
+
+
 
       .card-hover {
         transition: all 0.3s ease;
@@ -366,7 +402,7 @@
         secondary_action_color: "#10b981",
         font_family: "Prompt",
         font_size: 16,
-        app_title: "จับฉลากของขวัญปีใหม่ 2568",
+        app_title: "🎁 จับฉลากของขวัญปีใหม่ 🎁",
         button_text: "🎲 สุ่มรางวัล",
         winner_label: "ผู้โชคดี",
         prize_label: "ได้รับรางวัล",
@@ -735,19 +771,33 @@
           <div class="sparkle" style="top: 60%; right: 25%; animation-delay: 1.5s;"></div>
           
           <div class="w-full max-w-5xl relative z-10">
-            <!-- Header with Glass Effect -->
-            <div class="text-center mb-10 float-animation">
-              <div class="inline-block glass-morphism rounded-3xl px-8 py-6 mb-6 shadow-lg">
-                <div class="text-6xl mb-3">🎁</div>
-                <h1 id="appTitle" class="font-bold" style="color: ${
-                  config.text_color || defaultConfig.text_color
-                }; font-size: ${
-          baseFontSize * 2.5
-        }px; font-family: ${customFont}, ${baseFontStack};">
-                  ${config.app_title || defaultConfig.app_title}
-                </h1>
-              </div>
-            </div>
+            <!-- Header without white card -->
+<div class="text-center mb-14">
+  <h1
+    id="appTitle"
+    class="font-bold app-title-white"
+    style="
+      font-size: ${baseFontSize * 3.5}px;
+      font-family: ${customFont}, ${baseFontStack};
+    "
+  >
+    ${config.app_title || defaultConfig.app_title}
+  </h1>
+
+  <!-- Subtitle -->
+  <div
+    class="app-subtitle"
+    style="
+    font-size: ${baseFontSize * 2.}px;
+      font-family: ${customFont}, ${baseFontStack};
+    "
+  >
+    ลุ้นรางวัลกล่องจุ่ม
+  </div>
+</div>
+
+
+
 
             <!-- สถิติ Cards with Glass Effect -->
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
