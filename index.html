@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="th" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>การจับฉลากของขวัญปีใหม่</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script src="/_sdk/element_sdk.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+      import {
+        getFirestore,
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+      } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyCfHudoZq8vlj02vCj_UzwYyNzFCH21VVw",
+        authDomain: "lucky-draw-vip.firebaseapp.com",
+        projectId: "lucky-draw-vip",
+        storageBucket: "lucky-draw-vip.firebasestorage.app",
+        messagingSenderId: "256635371114",
+        appId: "1:256635371114:web:26e11864e48077e5055413",
+      };
+
+      const app = initializeApp(firebaseConfig);
+      window.db = getFirestore(app);
+      window.firebaseImports = {
+        collection,
+        addDoc,
+        query,
+        orderBy,
+        onSnapshot,
+      };
+    </script>
+    <style>
+      body {
+        box-sizing: border-box;
+      }
+
+      @keyframes confetti {
+        0% {
+          transform: translateY(0) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(100vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      .confetti {
+        position: fixed;
+        width: 10px;
+        height: 10px;
+        animation: confetti 3s ease-out forwards;
+        z-index: 1000;
+      }
+
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-50px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .slide-down {
+        animation: slideDown 0.5s ease-out;
+      }
+
+      @keyframes pulse-custom {
+        0%,
+        100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+      }
+
+      .pulse-button {
+        animation: pulse-custom 2s infinite;
+      }
+
+      @keyframes gradient {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      .gradient-bg {
+        background: linear-gradient(-45deg, #e0f2fe, #dbeafe, #e0e7ff, #ede9fe);
+        background-size: 400% 400%;
+        animation: gradient 15s ease infinite;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .float-animation {
+        animation: float 3s ease-in-out infinite;
+      }
+
+      @keyframes shine {
+        0% {
+          left: -100%;
+        }
+        100% {
+          left: 100%;
+        }
+      }
+
+      .shine-effect {
+        position: relative;
+        overflow: hidden;
+      }
+
+      .shine-effect::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 50%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        animation: shine 3s infinite;
+      }
+
+      .glass-morphism {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.5);
+      }
+
+      .card-hover {
+        transition: all 0.3s ease;
+      }
+
+      .card-hover:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+      }
+
+      @keyframes sparkle {
+        0%,
+        100% {
+          opacity: 0;
+          transform: scale(0);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .sparkle {
+        position: absolute;
+        width: 4px;
+        height: 4px;
+        background: white;
+        border-radius: 50%;
+        animation: sparkle 2s infinite;
+      }
+
+      @keyframes shakeGift {
+        0%,
+        100% {
+          transform: translateX(0) rotate(0deg);
+        }
+        10% {
+          transform: translateX(-10px) rotate(-5deg);
+        }
+        20% {
+          transform: translateX(10px) rotate(5deg);
+        }
+        30% {
+          transform: translateX(-10px) rotate(-5deg);
+        }
+        40% {
+          transform: translateX(10px) rotate(5deg);
+        }
+        50% {
+          transform: translateX(-10px) rotate(-5deg);
+        }
+        60% {
+          transform: translateX(10px) rotate(5deg);
+        }
+        70% {
+          transform: translateX(-10px) rotate(-5deg);
+        }
+        80% {
+          transform: translateX(10px) rotate(5deg);
+        }
+        90% {
+          transform: translateX(-5px) rotate(-2deg);
+        }
+        95% {
+          transform: translateX(5px) rotate(2deg);
+        }
+      }
+
+      .shake-gift {
+        animation: shakeGift 1s ease-in-out infinite;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+        }
+        50% {
+          transform: translateY(-30px) scale(1.1);
+        }
+      }
+
+      .bounce-gift {
+        animation: bounce 0.6s ease-in-out infinite;
+      }
+    </style>
+    <style>
+      @view-transition {
+        navigation: auto;
+      }
+    </style>
+    <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  </head>
+  <body class="h-full">
+    <div id="app" class="h-full w-full"></div>
+    <script>
+      // ข้อมูลเจ้าหน้าที่ 84 คน
+      const employees = [
+        "นายพิสุทธิ์  จรุงเรืองทรัพย์",
+        "นายกรรณวิญญ์ กานต์ธนินกุญช์",
+        "นางสาวลักษมณ  มั่นคง",
+        "นางสาวณัชชา  ถมยาพิทักษ์",
+        "นางสาวชุติมา ยิ้มอ่อน",
+        "นายธนวัฒน์ สุทธิปรีชานนท์",
+        "นางสาวชลธิชา แขมพิมาย",
+        "นางนัยนา จันทร์มา",
+        "นางสาวสุดา หมื่นอาจยิ้ม",
+        "นางสาวจิรธิดา ขุนสอาดศรี",
+        "นางสาวนิตยา วรรณะ",
+        "นางสาววิภาวรรณ ยันตะพานิช",
+        "นางสาวนงลักษณ์ นาคเถื่อน",
+        "นางสาวณัฐพัชร์ ทองอันตัง",
+        "นางสาวชลิดา หรีหร่อง",
+        "นางสาวหัทยา อินกล่อม",
+        "นางสาวพัชยา ทองเมืองหลวง",
+        "นางสาวคชาภรณ์ ดาบแก้ว",
+        "นางสาวจุฑามาศ คงจร",
+        "นางสาวณัฐณิชา เกิดภาคี",
+        "นายรณกฤต นวลเนาว์",
+        "นางสาวเพชรดา กอสวัสดิ์พัฒน์",
+        "นางสาวลลิตา ช่อสะอึก",
+        "นางสาววันทนีย์ สุตการ",
+        "นางสาวสมศรี สวัสดิ์ธารา",
+        "นางสาวสุทธิดา อินอำนวย",
+        "นางสาวณัฐริกา ค้าขาย",
+        "นางสาวชนานันท์ วัจนะ",
+        "นางสาวศุภานันท์ ยุมังกูร",
+        "นางกัญจนพร ศรีเพ็ชร",
+        "นางสาวกฤติยา ด้วงปลี",
+        "นางสาวมารศรี เบ็ญพาด",
+        "นางสาวธนัชพร บุษกร",
+        "นางสาวปิยะวรรณ มงคลเดช",
+        "นายคมกฤช ชูช่วง",
+        "นางสาวภิญญดา สัตย์ธรรมรังษี",
+        "นางสาวศิริประภาพร แสงทองดี",
+        "นางสาววิชชุเวช ปินกันทา",
+        "นางสาวมณฑา เหลืองกอบกิจ",
+        "นางสาวพิมพ์พิศา มงคลสารโสภณ",
+        "นางสาวณัฐชญา เทพณรงค์",
+        "นางสาวกาญจนา ยี่สุ่นศรี",
+        "นางสาวภาชินี ทองประสม",
+        "นางนภา เกษมโสต",
+        "นางสุภาพ ดอกเทียน",
+        "นางสุนี เจริญผล",
+        "นางสาวปรานอม ไวยิ่งยุทธ์",
+        "นางรดา เปรยเกิด",
+        "นางปราณี เครื่องจันทร์",
+        "นางสาวจิรพรรณ ครุยทอง",
+        "นางสาวจินดากานต์ ติณราช",
+        "นางสาวตุลาพร ทับทิมใส",
+        "นางวิภาวัลย์ ท่าฉลาด",
+        "นายสุวรรณ ละอองชัย",
+        "นายสมพงษ์ ขุนประเสริฐ",
+        "นายอนุวัตร กาวิระเดช",
+        "นางสาวปริชมน ใหม่จันทร์ดี",
+        "นางสาวปาริชาติ ข่าต้น",
+        "นายวเรนทร์ เสือหนู",
+        "นายสันติชัย ใจอดทน",
+        "นางสาวณัฐณิชา กันภัย",
+        "นางสาวเกสรา วัจนะ",
+        "นายนวภูมิ ศรีสังวรณ์",
+        "นางสาวเสาวภา ทรวงมั่น",
+        "นางสาววลัยรัตน์ บ้านกลางคีรีรัฐ",
+        "นายสำรัจ จินดารอง",
+        "นายชานนท์ วาสนาพันธ์",
+        "นางสาวมาลีรัตน์ รุ่งรัตนสกุล",
+        "นายสุริยา อุ่มรูปงาม",
+        "นางสาวกมลชนก บุญช่วย",
+        "นายอัสราฟ อิสเหาะ",
+        "นางสาวกิรติกา ทองดี",
+        "นายณัฏฐจักร สังกัดทอง",
+        "นางสาวเสาวนีย์ มงคลกาญจนคุณ",
+        "นายกฤตพล เขียนจัตุรัส",
+        "นางสาวกรองกาญจน์ ลีสุขสาม",
+        "นางสาวน้ำเพชร ชาติกลาง",
+        "นายโสภณ อิ่มจิตต์",
+        "นางสาวปิยดา อินทร์ชื่น",
+        "นายสมประสงค์ ทวีศรี",
+        "นางสาวกันยารัตน์ งอนรถ",
+        "นางสาวเกษมศรี นาสวนทัศนีย์",
+        "นางสาวกานดามณี อินทรประเสริฐ",
+        "นายเกรียงไกร",
+      ];
+
+      // รางวัลมีเพียงอย่างเดียว
+      const prize = "กล่องจุ่ม";
+
+      // ข้อมูล API สำหรับส่งการแจ้งเตือน
+      const NOTIFICATION_CONFIG = {
+        url: "https://morpromt2f.moph.go.th/api/notify/send",
+        clientKey: "78ad25bd1d723070de95fb5652393361d64817cb",
+        secretKey: "KIEBSLAUXEEDWIW3G3F2IT4ILPRQ",
+      };
+
+      const defaultConfig = {
+        background_color: "#f0f9ff",
+        surface_color: "#ffffff",
+        text_color: "#1e293b",
+        primary_action_color: "#3b82f6",
+        secondary_action_color: "#10b981",
+        font_family: "Prompt",
+        font_size: 16,
+        app_title: "การจับฉลากของขวัญปีใหม่ 2568",
+        button_text: "🎲 สุ่มรางวัล",
+        winner_label: "ผู้โชคดี",
+        prize_label: "ได้รับรางวัล",
+      };
+
+      let config = { ...defaultConfig };
+      let availableEmployees = [...employees];
+      let allDrawHistory = [];
+      let isDrawing = false;
+      let unsubscribe = null;
+
+      // ฟังก์ชันส่งการแจ้งเตือนไปยัง Line
+      async function sendLineNotification(employeeName, prize) {
+        const now = new Date();
+        const timestamp = now.toLocaleString("th-TH", {
+          timeZone: "Asia/Bangkok",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+        });
+
+        const message = `🎉 ผู้โชคดีที่ได้รับรางวัลกล่องจุ่ม\n\n⏰ เวลา: ${timestamp}\n👤 ชื่อ: ${employeeName}\n🎁 รางวัล: ${prize}`;
+
+        const payload = {
+          messages: [
+            {
+              type: "text",
+              text: message,
+            },
+          ],
+        };
+
+        try {
+          const response = await fetch(NOTIFICATION_CONFIG.url, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "client-key": NOTIFICATION_CONFIG.clientKey,
+              "secret-key": NOTIFICATION_CONFIG.secretKey,
+            },
+            body: JSON.stringify(payload),
+          });
+
+          if (response.ok) {
+            console.log("✅ ส่งการแจ้งเตือนสำเร็จ");
+            return true;
+          } else {
+            console.log("⚠️ ส่งการแจ้งเตือนล้มเหลว");
+            return false;
+          }
+        } catch (error) {
+          console.log("❌ เกิดข้อผิดพลาด:", error);
+          return false;
+        }
+      }
+
+      // ฟังก์ชันสร้างดอกไม้ไฟ
+      function createConfetti() {
+        const colors = [
+          "#ff0000",
+          "#00ff00",
+          "#0000ff",
+          "#ffff00",
+          "#ff00ff",
+          "#00ffff",
+        ];
+        for (let i = 0; i < 50; i++) {
+          setTimeout(() => {
+            const confetti = document.createElement("div");
+            confetti.className = "confetti";
+            confetti.style.left = Math.random() * 100 + "%";
+            confetti.style.backgroundColor =
+              colors[Math.floor(Math.random() * colors.length)];
+            confetti.style.animationDelay = Math.random() * 0.5 + "s";
+            document.body.appendChild(confetti);
+
+            setTimeout(() => confetti.remove(), 3000);
+          }, i * 30);
+        }
+      }
+
+      // ฟังก์ชันแสดง popup กล่องของขวัญสั่น
+      function showGiftBoxPopup() {
+        return new Promise((resolve) => {
+          const popup = document.createElement("div");
+          popup.className =
+            "fixed inset-0 flex items-center justify-center z-50";
+          popup.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
+
+          popup.innerHTML = `
+          <div class="text-center">
+            <div class="text-9xl shake-gift bounce-gift mb-4">🎁</div>
+            <div class="text-3xl font-bold text-white" style="font-family: ${
+              config.font_family || defaultConfig.font_family
+            }, system-ui; text-shadow: 2px 2px 4px rgba(0,0,0,0.5);">
+              กำลังจับฉลาก...
+            </div>
+          </div>
+        `;
+
+          document.body.appendChild(popup);
+
+          // แสดงกล่องของขวัญ 3 วินาที
+          setTimeout(() => {
+            popup.remove();
+            resolve();
+          }, 3000);
+        });
+      }
+
+      // ฟังก์ชันสุ่มรางวัล
+      async function drawPrize() {
+        if (isDrawing) return;
+
+        if (availableEmployees.length === 0) {
+          showCustomAlert(
+            "การจับฉลากเสร็จสิ้น",
+            "เจ้าหน้าที่ทุกคนได้รับรางวัลแล้ว! 🎉"
+          );
+          return;
+        }
+
+        isDrawing = true;
+        const drawButton = document.getElementById("drawButton");
+        drawButton.disabled = true;
+        drawButton.textContent = "กำลังสุ่ม...";
+
+        // แสดงกล่องของขวัญสั่น 3 วินาที
+        await showGiftBoxPopup();
+
+        // สุ่มชื่อ
+        const randomEmployeeIndex = Math.floor(
+          Math.random() * availableEmployees.length
+        );
+        const selectedEmployee = availableEmployees[randomEmployeeIndex];
+
+        // ลบพนักงานที่ถูกสุ่มออกจากรายการ
+        availableEmployees.splice(randomEmployeeIndex, 1);
+
+        // สร้างดอกไม้ไฟ
+        createConfetti();
+
+        // แสดงผล popup
+        showWinnerPopup(selectedEmployee, prize);
+
+        // ส่งการแจ้งเตือนและบันทึกข้อมูล
+        const notificationSent = await sendLineNotification(
+          selectedEmployee,
+          prize
+        );
+
+        // บันทึกข้อมูลลงใน Firebase
+        try {
+          const { collection, addDoc } = window.firebaseImports;
+          await addDoc(collection(window.db, "drawHistory"), {
+            timestamp: new Date().toISOString(),
+            employeeName: selectedEmployee,
+            prize: prize,
+            notified: notificationSent,
+          });
+          console.log("✅ บันทึกข้อมูลลง Firebase สำเร็จ");
+        } catch (error) {
+          console.error("❌ ไม่สามารถบันทึกข้อมูลได้:", error);
+        }
+
+        isDrawing = false;
+        drawButton.disabled = false;
+        drawButton.textContent =
+          config.button_text || defaultConfig.button_text;
+      }
+
+      // ฟังก์ชันแสดง popup ผู้ชนะ
+      function showWinnerPopup(name, prize) {
+        const popup = document.createElement("div");
+        popup.className = "fixed inset-0 flex items-center justify-center z-50";
+        popup.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
+
+        popup.innerHTML = `
+        <div class="slide-down relative" style="perspective: 1000px;">
+          <div class="bg-white rounded-3xl p-10 max-w-lg w-full mx-4 relative overflow-hidden" style="box-shadow: 0 25px 60px rgba(0,0,0,0.5); border: 3px solid ${
+            config.primary_action_color || defaultConfig.primary_action_color
+          }30;">
+            <!-- Animated Background Stars -->
+            <div class="sparkle" style="top: 10%; left: 15%; animation-delay: 0s;"></div>
+            <div class="sparkle" style="top: 20%; right: 20%; animation-delay: 0.3s;"></div>
+            <div class="sparkle" style="bottom: 25%; left: 25%; animation-delay: 0.6s;"></div>
+            <div class="sparkle" style="top: 70%; right: 15%; animation-delay: 0.9s;"></div>
+            <div class="sparkle" style="bottom: 15%; right: 35%; animation-delay: 1.2s;"></div>
+            
+            <div class="text-center relative z-10">
+              <div class="text-8xl mb-4 float-animation">🎊</div>
+              <h2 class="text-5xl font-bold mb-6" style="color: ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                ยินดีด้วย !
+              </h2>
+              
+              <div class="my-8 p-8 rounded-2xl" style="background: linear-gradient(135deg, ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }15, ${
+          config.secondary_action_color || defaultConfig.secondary_action_color
+        }15); border: 2px solid ${
+          config.primary_action_color || defaultConfig.primary_action_color
+        }30;">
+                <p class="text-4xl font-bold mb-8 break-words" style="color: ${
+                  config.primary_action_color ||
+                  defaultConfig.primary_action_color
+                }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui; line-height: 1.4;">
+                  ${name}
+                </p>
+                
+                <p class="text-2xl mb-4" style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                  ${config.prize_label || defaultConfig.prize_label}
+                </p>
+                
+                <p class="text-4xl font-bold break-words" style="color: ${
+                  config.secondary_action_color ||
+                  defaultConfig.secondary_action_color
+                }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                  ${prize}
+                </p>
+              </div>         
+              
+              <button id="closePopup" class="shine-effect px-10 py-4 rounded-full font-bold text-white transition-all duration-300 hover:shadow-2xl transform hover:scale-105" style="background: linear-gradient(135deg, ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }, ${
+          config.secondary_action_color || defaultConfig.secondary_action_color
+        }); font-size: 20px; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui; box-shadow: 0 10px 25px rgba(0,0,0,0.3);">
+                ปิด
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+        document.body.appendChild(popup);
+
+        document.getElementById("closePopup").addEventListener("click", () => {
+          popup.remove();
+        });
+
+        popup.addEventListener("click", (e) => {
+          if (e.target === popup) {
+            popup.remove();
+          }
+        });
+      }
+
+      // ฟังก์ชันแสดง custom alert
+      function showCustomAlert(title, message) {
+        const popup = document.createElement("div");
+        popup.className = "fixed inset-0 flex items-center justify-center z-50";
+        popup.style.backgroundColor = "rgba(0, 0, 0, 0.85)";
+
+        popup.innerHTML = `
+        <div class="slide-down">
+          <div class="bg-white rounded-3xl p-8 max-w-md w-full mx-4" style="box-shadow: 0 25px 60px rgba(0,0,0,0.5); border: 3px solid ${
+            config.primary_action_color || defaultConfig.primary_action_color
+          }30;">
+            <div class="text-center">
+              <div class="text-6xl mb-4">🎉</div>
+              <h2 class="text-3xl font-bold mb-4" style="color: ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                ${title}
+              </h2>
+              <p class="text-xl mb-6" style="color: ${
+                config.text_color || defaultConfig.text_color
+              }; font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                ${message}
+              </p>
+              <button id="closeAlert" class="shine-effect px-8 py-3 rounded-full font-bold text-white transition-all duration-300 transform hover:scale-105" style="background: linear-gradient(135deg, ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }, ${
+          config.secondary_action_color || defaultConfig.secondary_action_color
+        }); box-shadow: 0 10px 25px rgba(0,0,0,0.3); font-family: ${
+          config.font_family || defaultConfig.font_family
+        }, system-ui;">
+                ตกลง
+              </button>
+            </div>
+          </div>
+        </div>
+      `;
+
+        document.body.appendChild(popup);
+
+        document.getElementById("closeAlert").addEventListener("click", () => {
+          popup.remove();
+        });
+      }
+
+      // ฟังก์ชันโหลดข้อมูลจาก Firebase
+      function loadFirebaseData() {
+        const { collection, query, orderBy, onSnapshot } =
+          window.firebaseImports;
+        const q = query(
+          collection(window.db, "drawHistory"),
+          orderBy("timestamp", "desc")
+        );
+
+        unsubscribe = onSnapshot(q, (snapshot) => {
+          allDrawHistory = [];
+          snapshot.forEach((doc) => {
+            allDrawHistory.push({ id: doc.id, ...doc.data() });
+          });
+
+          // อัพเดทรายการพนักงานที่เหลือ
+          const drawnEmployees = allDrawHistory.map(
+            (record) => record.employeeName
+          );
+          availableEmployees = employees.filter(
+            (emp) => !drawnEmployees.includes(emp)
+          );
+
+          // อัพเดท UI
+          onConfigChange(config);
+        });
+      }
+
+      // ฟังก์ชัน render UI
+      async function onConfigChange(newConfig) {
+        config = { ...newConfig };
+
+        const customFont = config.font_family || defaultConfig.font_family;
+        const baseFontSize = config.font_size || defaultConfig.font_size;
+        const baseFontStack = "system-ui, -apple-system, sans-serif";
+
+        const app = document.getElementById("app");
+        app.style.fontFamily = `${customFont}, ${baseFontStack}`;
+
+        app.innerHTML = `
+        <div class="gradient-bg min-h-full w-full flex flex-col items-center justify-center p-6 relative overflow-hidden">
+          <!-- Decorative Elements -->
+          <div class="sparkle" style="top: 10%; left: 20%; animation-delay: 0s;"></div>
+          <div class="sparkle" style="top: 20%; right: 15%; animation-delay: 0.5s;"></div>
+          <div class="sparkle" style="bottom: 30%; left: 10%; animation-delay: 1s;"></div>
+          <div class="sparkle" style="top: 60%; right: 25%; animation-delay: 1.5s;"></div>
+          
+          <div class="w-full max-w-5xl relative z-10">
+            <!-- Header with Glass Effect -->
+            <div class="text-center mb-10 float-animation">
+              <div class="inline-block glass-morphism rounded-3xl px-8 py-6 mb-6 shadow-lg">
+                <div class="text-6xl mb-3">🎁</div>
+                <h1 id="appTitle" class="font-bold" style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-size: ${
+          baseFontSize * 2.5
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  ${config.app_title || defaultConfig.app_title}
+                </h1>
+              </div>
+            </div>
+
+            <!-- สถิติ Cards with Glass Effect -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+              <div class="glass-morphism rounded-2xl p-6 text-center card-hover shine-effect shadow-md">
+                <div class="text-4xl mb-3">👥</div>
+                <div class="font-bold mb-2" style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-size: ${
+          baseFontSize * 1.125
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  เหลือเจ้าหน้าที่
+                </div>
+                <div class="font-bold" style="color: ${
+                  config.primary_action_color ||
+                  defaultConfig.primary_action_color
+                }; font-size: ${
+          baseFontSize * 2.5
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  ${availableEmployees.length}
+                </div>
+                <div style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }80; font-size: ${
+          baseFontSize * 0.875
+        }px; font-family: ${customFont}, ${baseFontStack};">จากทั้งหมด ${
+          employees.length
+        } คน</div>
+              </div>
+              
+              <div class="glass-morphism rounded-2xl p-6 text-center card-hover shine-effect shadow-md">
+                <div class="text-4xl mb-3">✨</div>
+                <div class="font-bold mb-2" style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-size: ${
+          baseFontSize * 1.125
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  สุ่มไปแล้ว
+                </div>
+                <div class="font-bold" style="color: ${
+                  config.secondary_action_color ||
+                  defaultConfig.secondary_action_color
+                }; font-size: ${
+          baseFontSize * 2.5
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  ${allDrawHistory.length}
+                </div>
+                <div style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-size: ${
+          baseFontSize * 0.875
+        }px; font-family: ${customFont}, ${baseFontStack};">ครั้ง</div>
+              </div>
+            </div>
+
+            <!-- ปุ่มสุ่มขนาดใหญ่ -->
+            <div class="text-center mb-10">
+              <button id="drawButton" class="pulse-button shine-effect px-16 py-8 rounded-full font-bold text-white transition-all duration-300 hover:shadow-2xl transform hover:scale-110 relative" style="background: linear-gradient(135deg, ${
+                config.primary_action_color ||
+                defaultConfig.primary_action_color
+              }, ${
+          config.secondary_action_color || defaultConfig.secondary_action_color
+        }); font-size: ${
+          baseFontSize * 1.75
+        }px; font-family: ${customFont}, ${baseFontStack}; box-shadow: 0 10px 30px rgba(0,0,0,0.3);">
+                <span class="relative z-10">${
+                  config.button_text || defaultConfig.button_text
+                }</span>
+              </button>
+            </div>
+
+            <!-- ประวัติการสุ่มพร้อม Glass Effect -->
+            <div class="glass-morphism rounded-3xl p-8 shadow-md">
+              <div class="flex items-center mb-6">
+                <div class="text-4xl mr-3">📋</div>
+                <h2 class="font-bold" style="color: ${
+                  config.text_color || defaultConfig.text_color
+                }; font-size: ${
+          baseFontSize * 1.75
+        }px; font-family: ${customFont}, ${baseFontStack};">
+                  ประวัติการจับฉลาก
+                </h2>
+              </div>
+              <div id="historyList" class="space-y-3 max-h-96 overflow-y-auto">
+                ${
+                  allDrawHistory.length === 0
+                    ? `<div class="bg-white rounded-xl p-6 text-center shadow-sm" style="color: ${
+                        config.text_color || defaultConfig.text_color
+                      }; font-size: ${
+                        baseFontSize * 1.125
+                      }px; font-family: ${customFont}, ${baseFontStack};">
+                    <div class="text-5xl mb-3">🎊</div>
+                    ยังไม่มีการจับฉลาก<br>เริ่มต้นด้วยการกดปุ่มสุ่มรางวัล !
+                  </div>`
+                    : allDrawHistory
+                        .map(
+                          (record, index) => `
+                    <div class="bg-white rounded-xl p-5 card-hover shadow-sm">
+                      <div class="flex justify-between items-center flex-wrap gap-3">
+                        <div class="flex items-center gap-3">
+                          <div>
+                            <div class="font-bold" style="color: ${
+                              config.primary_action_color ||
+                              defaultConfig.primary_action_color
+                            }; font-size: ${
+                            baseFontSize * 1.125
+                          }px; font-family: ${customFont}, ${baseFontStack};">
+                              ${index + 1}. ${record.employeeName}
+                            </div>
+                            <div class="flex items-center gap-2 mt-1">
+                              <span style="color: ${
+                                config.text_color || defaultConfig.text_color
+                              }; font-size: ${
+                            baseFontSize * 0.875
+                          }px; font-family: ${customFont}, ${baseFontStack};">→</span>
+                              <span class="font-semibold" style="color: ${
+                                config.secondary_action_color ||
+                                defaultConfig.secondary_action_color
+                              }; font-size: ${baseFontSize}px; font-family: ${customFont}, ${baseFontStack};">
+                                ${record.prize}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="flex items-center gap-2">
+                          <span style="color: ${
+                            config.text_color || defaultConfig.text_color
+                          }80; font-size: ${
+                            baseFontSize * 0.875
+                          }px; font-family: ${customFont}, ${baseFontStack};">
+                            🕐 ${new Date(record.timestamp).toLocaleString(
+                              "th-TH",
+                              {
+                                timeZone: "Asia/Bangkok",
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
+                          </span>
+                          ${
+                            record.notified
+                              ? '<span style="color: #10b981;">✅</span>'
+                              : '<span style="color: #f59e0b;">⏳</span>'
+                          }
+                        </div>
+                      </div>
+                    </div>
+                  `
+                        )
+                        .join("")
+                }
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+        // เพิ่ม event listener
+        const drawBtn = document.getElementById("drawButton");
+        if (drawBtn) {
+          drawBtn.addEventListener("click", drawPrize);
+        }
+      }
+
+      // Element SDK
+      const element = {
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities: (cfg) => ({
+          recolorables: [
+            {
+              get: () => cfg.background_color || defaultConfig.background_color,
+              set: (value) => {
+                cfg.background_color = value;
+                window.elementSdk.setConfig({ background_color: value });
+              },
+            },
+            {
+              get: () => cfg.surface_color || defaultConfig.surface_color,
+              set: (value) => {
+                cfg.surface_color = value;
+                window.elementSdk.setConfig({ surface_color: value });
+              },
+            },
+            {
+              get: () => cfg.text_color || defaultConfig.text_color,
+              set: (value) => {
+                cfg.text_color = value;
+                window.elementSdk.setConfig({ text_color: value });
+              },
+            },
+            {
+              get: () =>
+                cfg.primary_action_color || defaultConfig.primary_action_color,
+              set: (value) => {
+                cfg.primary_action_color = value;
+                window.elementSdk.setConfig({ primary_action_color: value });
+              },
+            },
+            {
+              get: () =>
+                cfg.secondary_action_color ||
+                defaultConfig.secondary_action_color,
+              set: (value) => {
+                cfg.secondary_action_color = value;
+                window.elementSdk.setConfig({ secondary_action_color: value });
+              },
+            },
+          ],
+          borderables: [],
+          fontEditable: {
+            get: () => cfg.font_family || defaultConfig.font_family,
+            set: (value) => {
+              cfg.font_family = value;
+              window.elementSdk.setConfig({ font_family: value });
+            },
+          },
+          fontSizeable: {
+            get: () => cfg.font_size || defaultConfig.font_size,
+            set: (value) => {
+              cfg.font_size = value;
+              window.elementSdk.setConfig({ font_size: value });
+            },
+          },
+        }),
+        mapToEditPanelValues: (cfg) =>
+          new Map([
+            ["app_title", cfg.app_title || defaultConfig.app_title],
+            ["button_text", cfg.button_text || defaultConfig.button_text],
+            ["winner_label", cfg.winner_label || defaultConfig.winner_label],
+            ["prize_label", cfg.prize_label || defaultConfig.prize_label],
+          ]),
+      };
+
+      // เริ่มต้น
+      async function init() {
+        // รอให้ Firebase โหลดเสร็จ
+        while (!window.db || !window.firebaseImports) {
+          await new Promise((resolve) => setTimeout(resolve, 100));
+        }
+
+        if (window.elementSdk) {
+          window.elementSdk.init(element);
+          config = window.elementSdk.config;
+        }
+
+        // โหลดข้อมูลจาก Firebase
+        loadFirebaseData();
+      }
+
+      init();
+    </script>
+    <script>
+      (function () {
+        function c() {
+          var b = a.contentDocument || a.contentWindow.document;
+          if (b) {
+            var d = b.createElement("script");
+            d.innerHTML =
+              "window.__CF$cv$params={r:'9b2cba8f12fc7329',t:'MTc2NjU0Mzk3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";
+            b.getElementsByTagName("head")[0].appendChild(d);
+          }
+        }
+        if (document.body) {
+          var a = document.createElement("iframe");
+          a.height = 1;
+          a.width = 1;
+          a.style.position = "absolute";
+          a.style.top = 0;
+          a.style.left = 0;
+          a.style.border = "none";
+          a.style.visibility = "hidden";
+          document.body.appendChild(a);
+          if ("loading" !== document.readyState) c();
+          else if (window.addEventListener)
+            document.addEventListener("DOMContentLoaded", c);
+          else {
+            var e = document.onreadystatechange || function () {};
+            document.onreadystatechange = function (b) {
+              e(b);
+              "loading" !== document.readyState &&
+                ((document.onreadystatechange = e), c());
+            };
+          }
+        }
+      })();
+    </script>
+  </body>
+</html>
